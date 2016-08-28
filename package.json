@@ -1,13 +1,13 @@
 {
   "name": "contentful-content-management",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Wrapper for Contentful JS SDK with straightforward connections, queuing/rate limiting, and progress bars",
   "main": "./lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha -w"
   },
   "author": "Sam Deere <tech@centreforeffectivealtruism.org> (https://www.centreforeffectivealtruism.org)",
-  "repository" : "centre-for-effective-altruism/contentful-content-management",
+  "repository": "centre-for-effective-altruism/contentful-content-management",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.4.1",
