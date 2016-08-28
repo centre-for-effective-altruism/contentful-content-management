@@ -44,8 +44,8 @@ contentful.space(function(space){
     .then(function(entries){
         // returns an array of whatever you would expect the function to return, in this case the newly-created Entries
         console.log(entries);
-        // the .entryQueue() method allows you to queue method calls on an array of Entries or an EntryCollection:
-        contentful.entryQueue('publish', entries)
+        // the .itemQueue() method allows you to queue method calls on an array of Entries or an EntryCollection:
+        contentful.itemQueue('publish', entries)
     });
 
 })
@@ -74,7 +74,7 @@ contentful.space(function(space){
 
 ### Space.queue(_method, [...args], items_)
 
-The library injects a `.queue()` function into the resolved Space.
+The library injects a `.queue()` function into the resolved Space. Returns a Promise that resolves to an Array of whatever the `method` you're calling is supposed to return.
 
 **Parameters:**
 - **method** _[String]_: the Contentful API method you wish to call on `items`.
@@ -93,26 +93,26 @@ contentful.space(function(space){
 
 See [the Contentful JS SDK docs](https://contentful.github.io/contentful-management.js/contentful-management/1.1.11/ContentfulSpaceAPI.html) for a list of methods you can call on a Space.
 
-## .entryQueue(_method, items_)
+## .itemQueue(_method, items_)
 
-Allows you to queue method calls on a collection of entries
+Allows you to queue method calls on a collection of Entries or Assets.
 
 **Parameters**
-- **method** _[String]_: The method you wish to call on each Entry
-- **items** _[Array/EntryCollection]_: The Entries that you wish to call `method` on, either as an Array of entries (e.g. returned from `Space.queue()` or a Contentful EntryCollection (e.g. returned from `Space.getEntries()`).
+- **method** _[String]_: The method you wish to call on each Item
+- **items** _[Array/Collection]_: The Items that you wish to call `method` on, either as an Array of Entries/Assets (e.g. returned from `Space.queue()` or a Contentful EntryCollection (e.g. returned from `Space.getEntries()`).
 
 ```js
 
 contentful.space(function(space){
     space.getEntries({status:'draft'})
     .then(function(entries){
-        contentful.entryQueue('publish', entries);
+        contentful.itemQueue('publish', entries);
     });
 });
 
 ```
 
-See [the Contenful JS SDK docs](https://contentful.github.io/contentful-management.js/contentful-management/1.1.11/Entry.html) for a list of methods you can call on Entries.
+See the Contenful JS SDK docs for a list of methods you can call on [Entries](https://contentful.github.io/contentful-management.js/contentful-management/1.1.11/Entry.html) or [Assets](https://contentful.github.io/contentful-management.js/contentful-management/1.1.11/Asset.html).
 
 ## .format(_items, locale_)
 
@@ -245,7 +245,9 @@ _Object:_ Passed directly to the [promise-retry](https://www.npmjs.com/package/p
     contentful_space: process.env.CONTENTFUL_SPACE,
     contentful_management_access_token: process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN,
     progress: true,
-    queue_options: {},
+    queue_options: {
+        concurrency: 15
+    },
     retry_options: {}
 }
 ```

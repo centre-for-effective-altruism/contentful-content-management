@@ -6,7 +6,7 @@ chai.should();
 var Contentful = require('../lib/index.js');
 var contentful = new Contentful({
     queue_options: {
-        delay: 200     // mimic slow API connection to see progress bar
+        delay: 100,     // mimic slow API connection to see progress bar
     },
     retry_options: {
         retries: 1
@@ -19,6 +19,8 @@ var contentful = new Contentful({
 
 describe('Contentful Content Management', function(){
     
+    this.timeout(4000);
+
     describe('Convenience functions', function(){
         
         it('formats a single entry', function(){
@@ -78,7 +80,7 @@ describe('Contentful Content Management', function(){
     })
 
     describe('Basic interactions', function(){
-        this.timeout(4000);
+
         it('gets all Entries in the Space', function(){
             return contentful.space(function(space){
                 return space.getEntries();
@@ -144,35 +146,51 @@ describe('Contentful Content Management', function(){
             });
         });
         it('deletes the five test entries', function(){
-            return contentful.entryQueue('delete',testEntries)
+            return contentful.itemQueue('delete',testEntries)
             .should.be.fulfilled
             .should.eventually.be.an('array')
             .should.eventually.have.length(5)
         });
 
-        it('Gets all entries and runs a queue', function(){
+        it('.itemQueue() — Gets all entries and runs a queue', function(){
             return contentful.space(function(space){
                 return space.getEntries()
                 .then(function(entries){
-                    return contentful.entryQueue('unpublish',entries)
+                    return contentful.itemQueue('unpublish',entries)
                 })
                 .then(function(entries){
-                    return contentful.entryQueue('publish',entries);
+                    return contentful.itemQueue('publish',entries);
                 })
             })
             .should.be.fulfilled
         });
-        // after(function(){
-        //     // republish all the entries
-        //     return contentful.space(function(space){
-        //         space.getEntries()
-        //         .then(function(entries){
-        //             return contentful.entryQueue('publish',entries)
+        
+        it('.itemQueue() — Gets all assets and runs a queue', function(){
+            return contentful.space(function(space){
+                return space.getAssets()
+                .then(function(assets){
+                    return contentful.itemQueue('unpublish',assets)
+                })
+                .then(function(assets){
+                    return contentful.itemQueue('publish',assets);
+                })
+            })
+            .should.be.fulfilled
+        });
 
-        //         })
-        //     })
-        // });
     });
+
+    describe('Exception handling', function(){
+        it('Correctly throws an exception', function(){
+            return contentful.space(function(space){
+                return space.getEntries()
+                .then(function(entries){
+                    throw new Error;
+                })
+            })
+            .should.be.rejectedWith(Error)
+        });
+    })
 
 
 });
