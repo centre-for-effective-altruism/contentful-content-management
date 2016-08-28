@@ -27,8 +27,8 @@ var items = [
     {title: 'Page 3', body: 'Dolor sit amet.'},
 ];
 
-// use the .format() method to add localisation to the data
-items = contentful.format(items);
+// use the .formatItems() method to add localisation to the data
+items = contentful.formatItems(items);
 
 // the .space() method quickly creates a Contentful Space
 contentful.space(function(space){
@@ -114,7 +114,7 @@ contentful.space(function(space){
 
 See the Contenful JS SDK docs for a list of methods you can call on [Entries](https://contentful.github.io/contentful-management.js/contentful-management/1.1.11/Entry.html) or [Assets](https://contentful.github.io/contentful-management.js/contentful-management/1.1.11/Asset.html).
 
-## .format(_items, locale_)
+## .formatItems(_items, locale_)
 
 Convenience method for formatting entry data, and adding locale information.
 
@@ -142,7 +142,7 @@ This is annoying if you're mostly working with data in a simpler format:
     }
 ```
 
-Enter `.format()`...
+Enter `.formatItems()`...
 
 ```js
     
@@ -154,7 +154,7 @@ Enter `.format()`...
         title: 'Test 2',
         body:  'Test content 2...'
     }];
-    var data = contentful.formatEntries(data);
+    var data = contentful.formatItems(data);
     /*
     data.should.deep.equal(
         [
@@ -225,7 +225,7 @@ _String:_ The ID of your Contentful space. If should probably specify this as an
 _String:_ Your Contentful Content Management API access token. If should probably specify this as an environment variable instead. Defaults to `process.env.CONTENTFUL_MANAGEMENT_ACCESS_TOKEN`
 
 #### `locale`
-_String:_ The locale that you wish to use in calls to `.format()`. Defaults to `en-US`npm.
+_String:_ The locale that you wish to use in calls to `.formatItems()`. Defaults to `en-US`npm.
 
 #### `progress`
 _Boolean:_ Display a progress bar when using queues.

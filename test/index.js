@@ -28,7 +28,7 @@ describe('Contentful Content Management', function(){
                 title: 'Test',
                 body:  'Test content...'
             };
-            var data = contentful.formatEntries(data);
+            var data = contentful.formatItems(data);
             data.should.be.an('object');
             data.should.deep.equal({
                 fields: {
@@ -51,7 +51,7 @@ describe('Contentful Content Management', function(){
                 title: 'Test 2',
                 body:  'Test content 2...'
             }];
-            var data = contentful.formatEntries(data);
+            var data = contentful.formatItems(data);
             data.should.be.an('array');
             data.should.deep.equal([
                 {
@@ -117,7 +117,7 @@ describe('Contentful Content Management', function(){
                     body: 'Some test content for Test Post ' +i,
                 });
             }
-            testData = contentful.formatEntries(testData);
+            testData = contentful.formatItems(testData);
             // get all the content types of the space
             return contentful.space(function(space){
                 return space.getContentTypes()
