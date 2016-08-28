@@ -78,7 +78,7 @@ The library injects a `.queue()` function into the resolved Space.
 
 **Parameters:**
 - **method** _[String]_: the Contentful API method you wish to call on `items`.
-- **args** _[Mixed_: Additional arguments to pass to the API method
+- **args** _[Mixed]_: Additional arguments to pass to the API method
 - **items** _[Array]_: an Array of data you wish to use with the API.
 
 ```js
