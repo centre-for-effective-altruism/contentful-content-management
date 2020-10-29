@@ -15,7 +15,7 @@
     "contentful-management": "^1.1.9",
     "dotenv": "^2.0.0",
     "extend": "^3.0.0",
-    "progress": "^1.1.8",
+    "progress": "^2.0.3",
     "promise-retry": "^1.1.1"
   },
   "devDependencies": {
